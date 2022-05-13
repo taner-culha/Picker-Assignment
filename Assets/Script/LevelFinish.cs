@@ -6,31 +6,38 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 public class LevelFinish : MonoBehaviour
 {
-    private int _score = 0;
-    [SerializeField] private Text _scoreText;
-    /*dotween*/
+    public Text ScoreText;
+    int score=0;
+    public GameObject PickerTarget;
     public Transform PlatformNext;
     public float Time;
-    public void OnTriggerEnter(Collider other)
+    public ParticleSystem Confetti;
+    private void Awake()
     {
-        if (other.gameObject.tag == "sphere")
+        Confetti.Stop();
+    }
+    public void OnCollisionEnter(Collision coll)
+    {
+        if (coll.gameObject.tag == "sphere")
         {
-            _score += 1;
-            _scoreText.text = _score.ToString();
-            if (_score >= 5)
+            score += 1;
+            ScoreText.text = score.ToString();       
+            if (score >= 5)
             {
-                StartCoroutine(NextPlatfrom());
+                Confetti.Play();
+                PickerTarget.transform.DOMoveZ(PlatformNext.position.z, Time);
+                PickerTarget.GetComponent<PickerMove>().GamePlay();
             }
             else
             {
-                Restart();
+                StartCoroutine(NextPlatfrom());     
             }
         }
     }
     IEnumerator NextPlatfrom()
     {
         yield return new WaitForSeconds(5);
-        transform.DOMoveZ(PlatformNext.position.z, Time);
+        //Restart();
     }
     public void Restart()
     {

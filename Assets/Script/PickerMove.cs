@@ -45,10 +45,19 @@ public class PickerMove : MonoBehaviour
             TapToPlay = false;
             NextPlatfrom();
         }
+        if (collision.gameObject.tag == "stop2")
+        {
+            TapToPlay = false;
+            NextPlatfrom();
+        }
+        if (collision.gameObject.tag == "finish")
+        {
+            TapToPlay = false;
+        }
     }
     IEnumerator NextPlatfrom()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         TapToPlay = true;
     }
 }

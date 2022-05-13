@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PickerMove : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class PickerMove : MonoBehaviour
     private bool _canMove = true;
     [SerializeField] private bool TapToPlay;
     public GameObject PlayImg;
+    public ParticleSystem Confetti;
+    private void Awake()
+    {
+        Confetti.Stop();
+    }
     public void GamePlay()
     {
         TapToPlay = true;
@@ -53,11 +59,18 @@ public class PickerMove : MonoBehaviour
         if (collision.gameObject.tag == "finish")
         {
             TapToPlay = false;
+            Confetti.Play();
+            StartCoroutine(NextLevel());
         }
     }
     IEnumerator NextPlatfrom()
     {
         yield return new WaitForSeconds(2);
         TapToPlay = true;
+    }
+    IEnumerator NextLevel()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(Application.loadedLevel + 1);
     }
 }

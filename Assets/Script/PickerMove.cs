@@ -5,15 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class PickerMove : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5;
+    [SerializeField] private float speed = 5;
     private Vector3 _firstTouchPosition;
     private Vector3 _curTouchPosition;
     [SerializeField] private float sensitivityMultiplier = 0.01f;
     private float _finalTouchX;
     private float _xBound = 2.58f;
     private bool _canMove = true;
-    [SerializeField] private bool TapToPlay;
-    public GameObject PlayImg;
+    [SerializeField] private bool taptoplay;
+    public GameObject PlayImg,Diamonds,DPanel;
     public ParticleSystem Confetti;
     private void Awake()
     {
@@ -21,14 +21,14 @@ public class PickerMove : MonoBehaviour
     }
     public void GamePlay()
     {
-        TapToPlay = true;
+        taptoplay = true;
     }
     void FixedUpdate()
     {
-       if (TapToPlay)
+       if (taptoplay)
         {
             PlayImg.SetActive(false);
-            transform.Translate(Vector3.forward * _speed * Time.fixedDeltaTime);
+            transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
             if (Input.GetMouseButtonDown(0))
             {
                 _firstTouchPosition = Input.mousePosition;
@@ -48,25 +48,26 @@ public class PickerMove : MonoBehaviour
     {
         if (collision.gameObject.tag == "stop")
         {
-            TapToPlay = false;
-            NextPlatfrom();
+            taptoplay = false;
+            StartCoroutine(NextPlatfrom());
         }
         if (collision.gameObject.tag == "stop2")
         {
-            TapToPlay = false;
-            NextPlatfrom();
+            taptoplay = false;
+            StartCoroutine(NextPlatfrom());  
         }
         if (collision.gameObject.tag == "finish")
         {
-            TapToPlay = false;
+            taptoplay = false;
             Confetti.Play();
+            Instantiate(Diamonds, Camera.main.WorldToScreenPoint(transform.position), DPanel.transform.rotation, DPanel.transform);
             StartCoroutine(NextLevel());
         }
     }
     IEnumerator NextPlatfrom()
     {
         yield return new WaitForSeconds(2);
-        TapToPlay = true;
+        taptoplay = true;
     }
     IEnumerator NextLevel()
     {

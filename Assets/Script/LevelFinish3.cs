@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-public class LevelFinish : MonoBehaviour
+public class LevelFinish3 : MonoBehaviour
 {
     public Text ScoreText;
     public int Score=0;
-    public GameObject PickerTarget,L1,L2;
+    public GameObject PickerTarget,L1,L2,L3;
     public Transform PlatformNext;
     public float Time;
     public ParticleSystem Confetti;
@@ -22,10 +22,10 @@ public class LevelFinish : MonoBehaviour
         {
             Score += 1;
             ScoreText.text = Score.ToString();       
-            if (Score >= 5)
+            if (Score >= 15)
             {
                 Confetti.Play();
-                L1.GetComponent<Image>().color = Color.green;
+                L3.GetComponent<Image>().color = Color.green;
                 PickerTarget.transform.DOMoveZ(PlatformNext.position.z, Time);
                 PickerTarget.GetComponent<PickerMove>().GamePlay();
             }

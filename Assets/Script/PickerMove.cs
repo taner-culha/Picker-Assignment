@@ -66,12 +66,12 @@ public class PickerMove : MonoBehaviour
     }
     IEnumerator NextPlatfrom()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         taptoplay = true;
     }
     IEnumerator NextLevel()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         SceneManager.LoadScene(Application.loadedLevel + 1);
     }
 }

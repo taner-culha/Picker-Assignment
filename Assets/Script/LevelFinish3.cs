@@ -8,7 +8,7 @@ public class LevelFinish3 : MonoBehaviour
 {
     public Text ScoreText;
     public int Score=0;
-    public GameObject PickerTarget,L1,L2,L3;
+    public GameObject PickerTarget,L1,L2,L3, OpenDoorLeft, OpenDoorRight;
     public Transform PlatformNext;
     public float Time;
     public ParticleSystem Confetti;
@@ -25,6 +25,8 @@ public class LevelFinish3 : MonoBehaviour
             if (Score >= 15)
             {
                 Confetti.Play();
+                OpenDoorLeft.GetComponent<DoorOpenAnim>().OpenLeft();
+                OpenDoorRight.GetComponent<DoorOpenAnim>().OpenRight();
                 L3.GetComponent<Image>().color = Color.green;
                 PickerTarget.transform.DOMoveZ(PlatformNext.position.z, Time);
                 PickerTarget.GetComponent<PickerMove>().GamePlay();
